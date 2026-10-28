@@ -36,9 +36,9 @@
 
   // ---------- state ----------
   var s = { armed: false, step: 0, prevStep: -1, cat: 'L', prevCat: '', auto: true, top: 0, lift: -1, seen: {},
-    hc: 0, hprev: -1, htick: 0, hov: false, snap: -1, turns: 0, art: 0, dealt: false, vis: {}, stick: 0, menu: false,
+    hc: 0, hprev: -1, htick: 0, hov: false, snap: -1, turns: 0, art: 0, dealt: false, vis: {}, act: {}, stick: 0, menu: false,
     clock: '--:--', golden: '' };
-  var visNow = {};
+  var visNow = {}, actNow = {};
   var queued = false;
   function set(patch) {
     var p = typeof patch === 'function' ? patch(s) : patch;
@@ -53,7 +53,7 @@
   var lastQuote = '', lastLetters = '';
 
   function render() {
-    var seen = s.seen, vis = s.vis;
+    var seen = s.seen, vis = s.vis, act = s.act;
     root.classList.toggle('armed', s.armed);
     ['exp', 'mom', 'art', 'cta', 'foot'].forEach(function (k) {
       sec[k].classList.toggle('is-in', !!seen[k]);
@@ -82,7 +82,7 @@
     // experience
     steps.forEach(function (el, i) { el.classList.toggle('on', i === s.step); el.setAttribute('aria-pressed', String(i === s.step)); });
     ringTexts.forEach(function (el, i) { cls(el, join('rt', i === s.step ? 'on' : '')); });
-    var k = vis.exp ? 'k' + (s.stick % 2) : '';
+    var k = act.exp ? 'k' + (s.stick % 2) : '';
     cls(ring, join('ring', k));
     cls(marker, join('mk', k));
     cls(lens, join('lens', seen.exp ? 'b' + (s.stick % 2) : ''));
@@ -98,7 +98,7 @@
       el.classList.toggle('on', on);
       el.setAttribute('aria-pressed', String(on));
       var bar = $('.cbar', el), fill = $('.cfill', bar);
-      var want = s.auto && !!vis.mom && on;
+      var want = s.auto && !!act.mom && on;
       if (want && !fill) { fill = document.createElement('i'); fill.className = 'cfill'; bar.appendChild(fill); }
       if (!want && fill) fill.remove();
     });
@@ -219,7 +219,7 @@
     clearTimeout(stepT); stepT = 0;
     if (i !== s.step) set(function (st) { return { prevStep: st.step, step: i, turns: st.turns + ((i - st.step + 4) % 4), stick: st.stick + 1 }; });
     else set(function (st) { return { stick: st.stick + 1 }; });
-    if (visNow.exp) stepT = setTimeout(function () { goStep((i + 1) % 4); }, 5200);
+    if (actNow.exp) stepT = setTimeout(function () { goStep((i + 1) % 4); }, 5200);
   }
   steps.forEach(function (el, i) { el.addEventListener('click', function () { goStep(i); }); });
   media.addEventListener('mousemove', function (e) {
@@ -253,7 +253,7 @@
     if (reduce) { set({ auto: false }); return; }
     (function tick() {
       catT = setTimeout(function () {
-        if (!s.auto || !visNow.mom) return;
+        if (!s.auto || !actNow.mom) return;
         setCat(CATS[(CATS.indexOf(s.cat) + 1) % 3]);
         tick();
       }, 6500);
@@ -269,7 +269,7 @@
     dealT = setTimeout(function () { set({ dealt: true }); }, 1700);
     if (reduce) return;
     artT = setInterval(function () {
-      if (artHover || !visNow.art || Date.now() - artTapAt < 6000) return;
+      if (artHover || !actNow.art || Date.now() - artTapAt < 6000) return;
       set(function (st) { return { art: (st.art + 1) % 4 }; });
     }, 3400);
   }
@@ -374,10 +374,19 @@
       if (on && !st.seen[k]) { var sn = Object.assign({}, st.seen); sn[k] = true; n.seen = sn; }
       return n;
     });
-    if (k === 'exp') { if (on) runSteps(); else { clearTimeout(stepT); stepT = 0; } }
-    if (k === 'mom') { if (on) runCats(); else clearTimeout(catT); }
     if (k === 'art' && on) startArt();
   }
+
+  // The parts that move on by themselves (lens steps, category switch, artist rotation) start only once
+  // the visitor is well into that section, so nothing has advanced before they get there.
+  function setAct(k, on) {
+    if (!k || !!actNow[k] === on) return;
+    actNow[k] = on;
+    set(function (st) { var a = Object.assign({}, st.act); a[k] = on; return { act: a }; });
+    if (k === 'exp') { if (on) runSteps(); else { clearTimeout(stepT); stepT = 0; } }
+    if (k === 'mom') { if (on) runCats(); else clearTimeout(catT); }
+  }
+  var engage = { exp: media, mom: sec.mom, art: fan };
 
   // ---------- start ----------
   set({ armed: true });
@@ -389,8 +398,17 @@
       });
     }, { threshold: [0, 0.2, 0.4, 0.7] });
     Object.keys(sec).forEach(function (k) { io.observe(sec[k]); });
+    var io2 = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var vh = (e.rootBounds && e.rootBounds.height) || window.innerHeight || 800;
+        var k = Object.keys(engage).filter(function (n) { return engage[n] === e.target; })[0];
+        setAct(k, e.isIntersecting && (e.intersectionRatio >= 0.75 || e.intersectionRect.height >= vh * 0.6));
+      });
+    }, { threshold: [0, 0.25, 0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 1] });
+    Object.keys(engage).forEach(function (k) { io2.observe(engage[k]); });
   } else {
     Object.keys(sec).forEach(function (k) { setVis(k, true); });
+    Object.keys(engage).forEach(function (k) { setAct(k, true); });
   }
   setInterval(function () { shuffle(false); }, 3800);
   if (!reduce) setTimeout(function () { heroNext(); setInterval(heroNext, 3800); }, 4600);

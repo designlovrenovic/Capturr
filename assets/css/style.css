@@ -316,7 +316,7 @@ html{scroll-behavior:smooth}
 .cta-ps{max-width:min(560px,calc(100% - 2 * var(--pad)));margin:22px 0 0;font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.45;color:var(--ink)}
 
 /* ───────── footer ───────── */
-.foot{position:relative;margin-top:47px;padding:clamp(60px,6.7vw,96px) 0 0;background:var(--foot);color:var(--cream);border-radius:clamp(64px,12.5vw,180px) clamp(64px,12.5vw,180px) 0 0;overflow:hidden;transition:transform 1.5s var(--e),opacity 1s ease}
+.foot{position:relative;max-width:1440px;margin:47px auto 0;padding:clamp(60px,6.7vw,96px) 0 0;background:var(--foot);color:var(--cream);border-radius:clamp(64px,12.5vw,180px) clamp(64px,12.5vw,180px) 0 0;overflow:hidden;transition:transform 1.5s var(--e),opacity 1s ease}
 .armed .foot:not(.is-in){transform:translateY(80px);opacity:.4}
 
 /* closing line + the round "book" badge */
