@@ -12,30 +12,20 @@
   // ---------- elements ----------
   var root = $('.cp');
   var sec = {};
-  ['hero', 'exp', 'mom', 'art', 'cta', 'foot'].forEach(function (k) { sec[k] = $('[data-r="' + k + '"]'); });
+  ['hero', 'exp', 'gal', 'art', 'cta', 'foot'].forEach(function (k) { sec[k] = $('[data-r="' + k + '"]'); });
   var ret = $('[data-r="ret"]'), pins = [$('[data-r="p0"]'), $('[data-r="p1"]'), $('[data-r="p2"]')];
   var counters = $$('[data-hc]'), layers = $$('.ipw.b .lay'), rotWords = $$('.rot .rw');
   var steps = $$('.pstep'), ringTexts = $$('.ring .rt'), ring = $('svg.ring'), marker = $('.ring .mk');
   var ringG = $('.ring-g'), lens = $('.lens'), odo = $('.odo-in'), lensImgs = $$('.lens .xl'), media = $('[data-r="media"]');
-  var cats = $$('.cat'), catsBox = $('.cats'), quotes = $('.quotes'), texts = $$('.tx p'), tiles = $$('.tile');
   var prints = $$('.pc'), fan = $('[data-r="fan"]'), fanIn = $('.fan-in'), captions = $$('[data-ac]');
   var stack = $('.stack'), cards = $$('.stack .card'), badge = $('[data-r="badge"]');
   var mnav = $('.mnav'), mbtn = $('.mbtn');
   var clockEl = $('[data-clock]'), goldenEl = $('[data-golden]');
-  var CATS = ['L', 'P', 'B'];            // order of the category buttons on the page
-  var TXT = ['P', 'L', 'B'];             // order of the captions inside each text tile
-  var TILE_IMG = ['P', 'L', 'B'];        // order of the three photos inside each tile
-
-  var QUOTES = {
-    P: { text: '“CAPTURR made me forget the camera was there. Every portrait feels like me on my best day.”', by: 'Sample review — Portrait session' },
-    L: { text: '“CAPTURR exceeded my expectations with their personalized and creative approach”', by: 'Lifestyle session client' },
-    B: { text: '“CAPTURR gave our brand a visual voice. The images now do the selling for us.”', by: 'Sample review — Brand campaign' }
-  };
   var HERO_WORDS = ['families', 'people', 'brands'];
   var TILT0 = [-7, 4, -3, 6];
 
   // ---------- state ----------
-  var s = { armed: false, step: 0, prevStep: -1, cat: 'L', prevCat: '', auto: true, top: 0, lift: -1, seen: {},
+  var s = { armed: false, step: 0, prevStep: -1, top: 0, lift: -1, seen: {},
     hc: 0, hprev: -1, htick: 0, hov: false, snap: -1, turns: 0, art: 0, dealt: false, vis: {}, act: {}, stick: 0, menu: false,
     clock: '--:--', golden: '' };
   var visNow = {}, actNow = {};
@@ -50,12 +40,12 @@
   function cls(el, name) { if (el && el.getAttribute('class') !== name) el.setAttribute('class', name); }
   function hide(el, h) { if (el && el.hidden !== h) el.hidden = h; }
   function join() { return Array.prototype.filter.call(arguments, Boolean).join(' '); }
-  var lastQuote = '', lastLetters = '';
+  var lastLetters = '';
 
   function render() {
     var seen = s.seen, vis = s.vis, act = s.act;
     root.classList.toggle('armed', s.armed);
-    ['exp', 'mom', 'art', 'cta', 'foot'].forEach(function (k) {
+    ['exp', 'gal', 'art', 'cta', 'foot'].forEach(function (k) {
       sec[k].classList.toggle('is-in', !!seen[k]);
       sec[k].classList.toggle('vis', !!vis[k]);
     });
@@ -90,43 +80,6 @@
     cls(odo, 'odo-in s' + s.step);
     lensImgs.forEach(function (el, i) {
       cls(el, join('xl', !seen.exp ? '' : (i === s.step ? 'on' : (i === s.prevStep ? 'leave' : ''))));
-    });
-
-    // moments
-    cats.forEach(function (el, i) {
-      var c = CATS[i], on = c === s.cat;
-      el.classList.toggle('on', on);
-      el.setAttribute('aria-pressed', String(on));
-      var bar = $('.cbar', el), fill = $('.cfill', bar);
-      var want = s.auto && !!act.mom && on;
-      if (want && !fill) { fill = document.createElement('i'); fill.className = 'cfill'; bar.appendChild(fill); }
-      if (!want && fill) fill.remove();
-    });
-    catsBox.classList.toggle('auto', s.auto);
-    var qKey = seen.mom ? s.cat : '';
-    if (qKey !== lastQuote) {
-      lastQuote = qKey;
-      quotes.innerHTML = '';
-      if (qKey) {
-        var q = QUOTES[qKey], fig = document.createElement('figure'), bq = document.createElement('blockquote');
-        fig.className = 'q';
-        q.text.split(' ').forEach(function (w, i) {
-          var sp = document.createElement('span');
-          sp.className = 'w'; sp.style.animationDelay = (i * 42) + 'ms'; sp.textContent = w;
-          bq.appendChild(sp);
-        });
-        var cap = document.createElement('figcaption');
-        cap.textContent = q.by;
-        fig.appendChild(bq); fig.appendChild(cap);
-        quotes.appendChild(fig);
-      }
-    }
-    texts.forEach(function (el, i) { cls(el, TXT[i % 3] === s.cat ? 'on' : ''); });
-    tiles.forEach(function (tile) {
-      $$('.ti', tile).forEach(function (im, j) {
-        var c = TILE_IMG[j];
-        cls(im, join('ti', !seen.mom ? '' : (c === s.cat ? 'on' : (c === s.prevCat ? 'leave' : ''))));
-      });
     });
 
     // artists
@@ -243,24 +196,6 @@
   media.addEventListener('touchstart', swipeStart, { passive: true });
   media.addEventListener('touchend', function (e) { var d = swipeDir(e); if (d) goStep((s.step + d + 4) % 4); }, { passive: true });
 
-  // ---------- moments: categories, photo columns, reviews ----------
-  var catT = 0;
-  function setCat(c) { if (c !== s.cat) set(function (st) { return { prevCat: st.cat, cat: c }; }); }
-  function pickCat(c) { clearTimeout(catT); if (s.auto) set({ auto: false }); setCat(c); }
-  function runCats() {
-    clearTimeout(catT);
-    if (!s.auto) return;
-    if (reduce) { set({ auto: false }); return; }
-    (function tick() {
-      catT = setTimeout(function () {
-        if (!s.auto || !actNow.mom) return;
-        setCat(CATS[(CATS.indexOf(s.cat) + 1) % 3]);
-        tick();
-      }, 6500);
-    })();
-  }
-  cats.forEach(function (el, i) { el.addEventListener('click', function () { pickCat(CATS[i]); }); });
-
   // ---------- artists: the hand of prints ----------
   var artHover = false, artTapAt = 0, artStarted = false, artT = 0, dealT = 0;
   function startArt() {
@@ -354,7 +289,7 @@
     var vh = window.innerHeight || 800;
     var hr = sec.hero.getBoundingClientRect();
     sec.hero.style.setProperty('--hp', Math.min(1, Math.max(0, -hr.top / Math.max(1, hr.height))).toFixed(4));
-    ['exp', 'mom', 'art', 'cta'].forEach(function (k) {
+    ['exp', 'art', 'cta'].forEach(function (k) {
       var r = sec[k].getBoundingClientRect();
       sec[k].style.setProperty('--p', Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height))).toFixed(4));
     });
@@ -377,16 +312,15 @@
     if (k === 'art' && on) startArt();
   }
 
-  // The parts that move on by themselves (lens steps, category switch, artist rotation) start only once
+  // The parts that move on by themselves (lens steps, artist rotation) start only once
   // the visitor is well into that section, so nothing has advanced before they get there.
   function setAct(k, on) {
     if (!k || !!actNow[k] === on) return;
     actNow[k] = on;
     set(function (st) { var a = Object.assign({}, st.act); a[k] = on; return { act: a }; });
     if (k === 'exp') { if (on) runSteps(); else { clearTimeout(stepT); stepT = 0; } }
-    if (k === 'mom') { if (on) runCats(); else clearTimeout(catT); }
   }
-  var engage = { exp: media, mom: sec.mom, art: fan };
+  var engage = { exp: media, art: fan };
 
   // ---------- start ----------
   set({ armed: true });

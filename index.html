@@ -15,6 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&amp;family=Noto+Serif+Display:ital,wdth,wght@0,62.5..100,100..900;1,62.5..100,100..900&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="assets/js/main.js" defer></script>
+<script src="assets/js/gallery.js" defer></script>
 </head>
 <body>
 <div class="cp">
@@ -113,37 +114,48 @@
 </div>
 </section>
 
-<section class="wrap mom" id="work" data-r="mom">
-<div class="mom-text">
-<h2 class="kick rv">What do you need photographed?</h2>
-<div class="cats auto" role="group" aria-label="Choose a category">
-<button type="button" class="cat on" aria-pressed="true"><span class="ci d1"><span class="cw">Lifestyle<span class="cnw" aria-hidden="true"><span class="cn">01</span></span><span class="cbar"></span></span></span></button>
-<button type="button" class="cat" aria-pressed="false"><span class="ci d2"><span class="cw">Portrait<span class="cnw" aria-hidden="true"><span class="cn">02</span></span><span class="cbar"></span></span></span></button>
-<button type="button" class="cat" aria-pressed="false"><span class="ci d3"><span class="cw">Brand<span class="cnw" aria-hidden="true"><span class="cn">03</span></span><span class="cbar"></span></span></span></button>
+<section class="gal" id="work" data-r="gal">
+<div class="wrap">
+<div class="gal-head">
+<div>
+<p class="gal-kick rv">Selected work</p>
+<h2 class="gal-h" aria-label="Look closer."><span class="gl"><span>Look</span></span> <span class="gh-pill" aria-hidden="true"></span> <span class="gl"><span><em>closer.</em></span></span></h2>
 </div>
-<p class="clients rv d3">What clients say</p>
-<div class="quotes" aria-live="polite">
-
-
-
+<p class="gal-sub rv d2">A few favourite frames from recent sessions. Open any photo and hold it to see the detail.</p>
+</div>
+<div class="gal-bar rv d3">
+<div class="gal-filters" role="group" aria-label="Filter photos">
+<button type="button" class="gf on" data-f="A" aria-pressed="true">All<span class="gfn">28</span></button><button type="button" class="gf" data-f="P" aria-pressed="false">Portraits<span class="gfn">10</span></button><button type="button" class="gf" data-f="L" aria-pressed="false">Lifestyle<span class="gfn">08</span></button><button type="button" class="gf" data-f="B" aria-pressed="false">Brand<span class="gfn">10</span></button>
+<span class="gf-u" aria-hidden="true"></span>
+</div>
+<p class="gal-count" aria-live="polite">Showing <b data-gshown>0</b> of <span data-gtotal>28</span> photos</p>
+</div>
+<div class="gal-grid">
+<div class="gcur" aria-hidden="true"><span class="gcur-in"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></span><span class="gcur-l">VIEW</span></div>
+</div>
+<div class="gal-foot">
+<p class="gal-note rv">Every session ends with a private online gallery of 40 to 80 hand-edited photos.</p>
+<button type="button" class="btn gal-more" aria-expanded="false"><span data-glabel>Show all 28 photos</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
 </div>
 </div>
-<div class="stage">
-<div class="tilt">
-<div class="col dn"><div class="track">
-<div class="set"><div class="tile"><img class="ti" src="assets/img/portrait-striped-coat.jpg" alt="Woman in a striped coat with her hands raised to her face" style="animation-delay: 0.00s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-plants.jpg" alt="Plant-filled conservatory cafe in soft light" style="animation-delay: 0.00s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-sneaker.jpg" alt="White leather sneaker on a slate-blue backdrop" style="animation-delay: 0.00s" loading="lazy" decoding="async"></div><div class="tile"><img class="ti" src="assets/img/portrait-elder.jpg" alt="Black-and-white portrait of an elderly man with a white beard" style="animation-delay: 0.07s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-boat.jpg" alt="Aerial view of a yacht on teal water" style="animation-delay: 0.07s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-barista.jpg" alt="Barista pouring latte art into a grey ceramic cup" style="animation-delay: 0.07s" loading="lazy" decoding="async"></div><div class="tile"><img class="ti" src="assets/img/portrait-linen.jpg" alt="Man in a beige linen suit seated on a wooden stool" style="animation-delay: 0.14s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-dinner.jpg" alt="Friends sharing an outdoor dinner by candlelight" style="animation-delay: 0.14s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-watch.jpg" alt="Steel watch with a green dial on a wrist" style="animation-delay: 0.14s" loading="lazy" decoding="async"></div><div class="tile"><img class="ti" src="assets/img/portrait-curly.jpg" alt="Black-and-white portrait of a laughing woman with curly hair" style="animation-delay: 0.21s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-surf.jpg" alt="Surfer launching off a breaking wave" style="animation-delay: 0.21s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-chair.jpg" alt="Oak lounge chair in a plaster-walled room" style="animation-delay: 0.21s" loading="lazy" decoding="async"></div></div>
-<div class="set" aria-hidden="true"><div class="tile"><img class="ti" src="assets/img/portrait-striped-coat.jpg" alt="" style="animation-delay: 0.00s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-plants.jpg" alt="" style="animation-delay: 0.00s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-sneaker.jpg" alt="" style="animation-delay: 0.00s" loading="lazy" decoding="async"></div><div class="tile"><img class="ti" src="assets/img/portrait-elder.jpg" alt="" style="animation-delay: 0.07s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-boat.jpg" alt="" style="animation-delay: 0.07s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-barista.jpg" alt="" style="animation-delay: 0.07s" loading="lazy" decoding="async"></div><div class="tile"><img class="ti" src="assets/img/portrait-linen.jpg" alt="" style="animation-delay: 0.14s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-dinner.jpg" alt="" style="animation-delay: 0.14s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-watch.jpg" alt="" style="animation-delay: 0.14s" loading="lazy" decoding="async"></div><div class="tile"><img class="ti" src="assets/img/portrait-curly.jpg" alt="" style="animation-delay: 0.21s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-surf.jpg" alt="" style="animation-delay: 0.21s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-chair.jpg" alt="" style="animation-delay: 0.21s" loading="lazy" decoding="async"></div></div>
-</div></div>
-<div class="col up"><div class="track">
-<div class="set">
-<div class="tx"><p class="">Portraits you'll actually use. On your website, your book cover, your mum's fridge.</p><p class="on">Your family the way it really is on a Sunday morning. Messy hair included.</p><p class="">Product and team photos you can use on your site, your socials and your next pitch deck.</p></div>
-<div class="tile"><img class="ti" src="assets/img/portrait-turtle.jpg" alt="Man in a charcoal turtleneck against a slate-blue backdrop" style="animation-delay: 0.07s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-couple.jpg" alt="Couple embracing on a winter street" style="animation-delay: 0.07s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-perfume.jpg" alt="Amber perfume bottle on travertine stone" style="animation-delay: 0.07s" loading="lazy" decoding="async"></div><div class="tile"><img class="ti" src="assets/img/portrait-window.jpg" alt="Woman in a cream sweater by a window, eyes closed" style="animation-delay: 0.14s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-coffee.jpg" alt="Woman with a coffee cup in a moody living room" style="animation-delay: 0.14s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-linen.jpg" alt="Model in a sand linen outfit passing a plaster wall" style="animation-delay: 0.14s" loading="lazy" decoding="async"></div><div class="tile"><img class="ti" src="assets/img/portrait-freckle.jpg" alt="Close-up portrait of a red-haired woman with freckles" style="animation-delay: 0.21s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-shore.jpg" alt="Aerial view of turquoise waves on white sand" style="animation-delay: 0.21s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-skin.jpg" alt="Dropper bottle and jar on wet stone with eucalyptus" style="animation-delay: 0.21s" loading="lazy" decoding="async"></div><div class="tile"><img class="ti" src="assets/img/portrait-hat.jpg" alt="Woman in a camel coat and felt hat on a coastal cliff" style="animation-delay: 0.28s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-rain.jpg" alt="Woman carrying white flowers along a rainy street" style="animation-delay: 0.28s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-headphones.jpg" alt="Sage-green headphones on a concrete plinth" style="animation-delay: 0.28s" loading="lazy" decoding="async"></div>
+<div class="gv" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true" tabindex="-1">
+<div class="gv-bg"></div>
+<div class="gv-box">
+<div class="gv-top gv-ui">
+<p class="gv-count"><span class="gv-n">01</span><span class="gv-of"> / 28</span></p>
+<p class="gv-cat">Portrait session</p>
+<button type="button" class="gv-x" aria-label="Close viewer"><span></span><span></span></button>
 </div>
-<div class="set" aria-hidden="true">
-<div class="tx"><p class="">Portraits you'll actually use. On your website, your book cover, your mum's fridge.</p><p class="on">Your family the way it really is on a Sunday morning. Messy hair included.</p><p class="">Product and team photos you can use on your site, your socials and your next pitch deck.</p></div>
-<div class="tile"><img class="ti" src="assets/img/portrait-turtle.jpg" alt="" style="animation-delay: 0.07s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-couple.jpg" alt="" style="animation-delay: 0.07s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-perfume.jpg" alt="" style="animation-delay: 0.07s" loading="lazy" decoding="async"></div><div class="tile"><img class="ti" src="assets/img/portrait-window.jpg" alt="" style="animation-delay: 0.14s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-coffee.jpg" alt="" style="animation-delay: 0.14s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-linen.jpg" alt="" style="animation-delay: 0.14s" loading="lazy" decoding="async"></div><div class="tile"><img class="ti" src="assets/img/portrait-freckle.jpg" alt="" style="animation-delay: 0.21s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-shore.jpg" alt="" style="animation-delay: 0.21s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-skin.jpg" alt="" style="animation-delay: 0.21s" loading="lazy" decoding="async"></div><div class="tile"><img class="ti" src="assets/img/portrait-hat.jpg" alt="" style="animation-delay: 0.28s" loading="lazy" decoding="async"><img class="ti" src="assets/img/lifestyle-rain.jpg" alt="" style="animation-delay: 0.28s" loading="lazy" decoding="async"><img class="ti" src="assets/img/brand-headphones.jpg" alt="" style="animation-delay: 0.28s" loading="lazy" decoding="async"></div>
+<div class="gv-stage">
+<div class="loupe" aria-hidden="true"><svg viewBox="0 0 278 278" aria-hidden="true"><circle class="lt" cx="139" cy="139" r="134"></circle><circle class="ltb" cx="139" cy="139" r="134"></circle></svg><i class="lc"></i><span class="lz">2.2×</span></div>
+<button type="button" class="gv-arr prev gv-ui" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<button type="button" class="gv-arr next gv-ui" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button>
 </div>
-</div></div>
+<div class="gv-bot gv-ui">
+<div class="gv-info"><p class="gv-t"></p><p class="gv-p"></p></div>
+<div class="gv-strip"></div>
+<div class="gv-meta"><p class="gv-g"></p><p class="gv-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.5 15.5L21 21M10.5 7.5v6M7.5 10.5h6"></path></svg><span data-ghint>Click and hold to look closer</span></p></div>
+</div>
 </div>
 </div>
 </section>
